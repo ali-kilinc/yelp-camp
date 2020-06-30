@@ -77,9 +77,6 @@ app.use(function(req, res, next)
     next();
 });
 
-// add some dummy data
-// db.seedDb();
-
 // add routers
 app.use("/campgrounds", campgroundRoutes);
 app.use("/users", userRouters);
