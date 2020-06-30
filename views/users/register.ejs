@@ -1,0 +1,18 @@
+<div class="d-flex flex-column align-items-center mt-5">   
+    <img src="/icon/ms-icon-70x70.png" width="30" height="30" class="" alt="YelpCamp Logo">
+    <h2 class="">YelpCamp</h2>
+    <p id="register-desc">Register to show everyone how good camper you are <i class="fas fa-smile-wink green"></i></p>
+    
+    <div id="error-message" class="alert alert-danger" role="alert"></div>
+    
+    <form class="w-auto" id="register-form" action="/users/register" method="POST">
+        <label class="font-weight-bold" for="user[username]">Username</label>
+        <input class="w-100 d-block mb-2" type="text" name="user[username]" placeholder="john_smith">
+        <label class="font-weight-bold" for="user[password]">Password</label>
+        <input class="w-100 d-block mb-2" type="password" name="user[password]" placeholder="password">
+        <label class="font-weight-bold" for="confirmedPassword">Re-enter Your Password</label>
+        <input class="w-100 d-block mb-2" type="password" name="confirmedPassword" placeholder="password">
+        <button class="my-3 w-100 d-block btn btn-success btn-sm">Sign Up</button>
+        <span>Already have an account ?</span><a href="#" id="login-anchor"> Login</a>
+    </form>
+</div>

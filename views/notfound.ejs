@@ -1,0 +1,9 @@
+<%- include('./partials/header.ejs', {pageTitle : "Not Found", container : true, customStylesheets : ["/stylesheets/common.min.css"]}) %>
+
+<section class="d-flex shadow bg-white m-5 p-5 flex-column align-items-center">
+    <i class="display-1 fas fa-frown"></i>
+    <h1 class="display-1 text-success">SORRY, PAGE NOT FOUND</h1>
+    <a class="btn btn-success btn-lg" href="/">GO BACK HOME</a>
+</section>
+
+<%- include('./partials/footer.ejs' , { visible : false, customScripts : ["/scripts/users/user.js"]}) %>

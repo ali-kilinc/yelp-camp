@@ -1,0 +1,65 @@
+<%- include('../partials/header.ejs', {pageTitle : "Yelp Campgrounds", container : true, customStylesheets : ["/stylesheets/common.css"]}) %>
+
+<header>
+    <div class="shadow jumbotron d-flex flex-column align-items-center text-center">
+        <h1>YelpCamp</h1>        
+        <p class="lead">Welcome to our campfire where friends and marshmallows get <span class="font-italic">toasted</span> at the same time</p>
+        <a class="btn btn-success btn-sm" href="/campgrounds/new">Add A New Campground</a>
+        <div></div>
+    </div>
+</header>
+
+<section id="campgrounds-area" class="container">
+
+    <% if(successMessage && successMessage.length > 0) { %>
+        <div class="alert alert-success" role="alert"><%- successMessage %></div>
+    <% } %>
+    
+    <% if(errorMessage && errorMessage.length > 0) { %>
+        <div class="alert alert-danger" role="alert"><%- errorMessage %></div>
+    <% } %>
+
+    <div id="campgrounds-area-row" class="row">
+
+        <% allCamps.forEach(camp => { 
+            let total = 0, rating = 0;
+            if(camp.reviews && camp.reviews.length > 0)
+            {
+                camp.reviews.forEach(r => {
+                total += r.rating;
+                });
+                rating = total / camp.reviews.length;
+            } %>
+
+            <div class="col-12 col-sm-6 col-lg-4 p-4">
+                <div class="shadow card">
+                    <img src="<%= camp.imageUrl %>" onclick="window.location.href = '/campgrounds/<%= camp._id %>';" onerror="if (this.src != '/images/nopiccamp.png') this.src = '/images/nopiccamp.png';" class="card-img-top link" alt="<%= camp.name %>>">
+                    <div class="card-body">
+                        <span class="card-title"><%- '<a href="/campgrounds/' + camp._id + '">' + camp.name + '</a>' %>
+                            <div>
+                            <% 
+                            for(var i=0; i<5; i++) {  
+                                if(rating >= 1) { %>
+                                    <i class="fas fa-star green"></i>
+                                <% } else if(rating > 0 && rating < 1) { %>
+                                    <i class="fas fa-star-half-alt green"></i>
+                                <% } else { %>
+                                    <i class="far fa-star green"></i>
+                                <% }
+                                    rating -= 1;
+                            } %> <small class="text-muted"> <%= camp.reviews.length %> Reviews</small>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+        <% }); %>
+        </section>
+
+    <script>
+        ScrollReveal().reveal('.card', { interval: 150, mobile: true, viewFactor: 0.3});
+    </script>
+
+<%- include('../partials/footer.ejs' , { visible : true, customScripts : ["/scripts/users/user.js"]}) %>
+

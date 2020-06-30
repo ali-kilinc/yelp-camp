@@ -1,0 +1,64 @@
+<%- include('../partials/header.ejs', {pageTitle : "Edit Campground", container : true, customStylesheets : ["https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css",
+                                                                                         "/stylesheets/common.css",
+                                                                                         "/stylesheets/campgrounds/map.min.css"]}) %>
+
+<main class="container shadow  bg-white p-5 mt-5">
+
+    <% if(successMessage && successMessage.length > 0) { %>
+        <div class="alert alert-success" role="alert"><%- successMessage %></div>
+    <% } %>
+    
+    <% if(errorMessage && errorMessage.length > 0) { %>
+        <div class="alert alert-danger" role="alert"><%- errorMessage %></div>
+    <% } %>
+    
+    <h2>Edit The Campground</h2>
+    <hr> 
+    <div id="missing-location-warning" class="alert alert-danger" role="alert">Pick a Location For The Campground</div>
+
+    <div class="row">
+        <form class="col-12 col-lg-6 p-3" id="edit-form" action="/campgrounds/<%= campground._id%>?_method=PUT" method="POST">
+            <label for="campground[name]">Campground Name</label>
+            <input class="w-100 d-block mb-2" type="text" name="campground[name]" placeholder="name" value="<%= campground.name %>" required>
+            <label for="campground[description]">Description</label>
+            <textarea class="w-100 d-block mb-2" name="campground[description]" placeholder="Say something useful about this campground."><%= campground.description %></textarea>
+            <label for="campground[price]">Price/Night</label>
+            <input class="w-100 d-block mb-2" type="number" step="0.01" min="0" name="campground[price]" placeholder="Price Per Night ($)" value="<%= campground.price %>">
+            <label for="campground[imageUrl]">Image</label>
+            <input class="w-100 d-block mb-2" type="text" name="campground[imageUrl]" placeholder="image url" value="<%= campground.imageUrl %>" required>
+            <input id="location-input" type="hidden" name="campground[location]" value="<%= JSON.stringify(campground.location) %>">
+            <input id="amenities-input" type="hidden" name="campground[amenities]" value="<%= JSON.stringify(campground.amenities) %>">
+        </form>
+
+        <section id="location-sec" class="col-12 col-lg-6 p-3">
+            <label for="campground[location]">Search/Pick A Location On The Map</label>
+            <div id='map'></div>
+            <div class="d-flex flex-row">
+                <input class="w-100 mr-2" id="location-search-text" type="text" placeholder="Search a Location">
+                <button class="btn btn-success btn-sm" id='btn-search'>Search</button>
+            </div>
+            <div id="location-search-results" class="list-group"></div>
+        </section>
+
+        <section id="amenities-sec" class="col-12">
+            <label>Choose Available Amenities</label>
+            <br>
+
+            <% amenities.forEach(a => { 
+
+                let cls = "badge badge-pill amenity-span";
+                if(campground.amenities.indexOf(a.amenity) >= 0)
+                {
+                    cls += " active";
+                } %>
+                
+                <span class="<%= cls %>"><%- a.icon + " " + a.amenity %></span>
+            <% }) %> 
+            
+        </section>        
+    </div>
+    <hr>
+    <button type="submit" form="edit-form" class="btn btn-success float-right">Update The Campground</button>
+</main>
+
+<%- include('../partials/footer.ejs', { visible : true, customScripts : ["https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js", "/scripts/campgrounds/campgroundForm.js", "/scripts/users/user.js"]}) %>

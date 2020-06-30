@@ -1,0 +1,15 @@
+<%- include('./partials/header.ejs', {pageTitle : "About YelpCamp", container : true, customStylesheets : ["/stylesheets/common.min.css"]}) %>
+
+<main class="container bg-white shadow mt-5 p-5">
+
+    <h2>About Yelp Camp</h2>
+    <hr>
+    <p><span class="green">YelpCamp</span> is a project for <a href="https://www.udemy.com/course/the-web-developer-bootcamp/" target="_blank">The Web Developer Bootcamp</a> course by Colt Steele. 
+        It's created by using Node.js, Express and MongoDB.</p>
+    
+    <p>Users can sign up, login and create their own camgrounds. They also can write reviews to all campgrounds and edit/delete campgrounds and their reviews.</p>
+
+    <p>Please feel free to register and explore the features of YelpCamp. I would appreciate if you could give me your feedback on my <a href="mailto://alikilinc1986@gmail.com">mail address.</a></p>
+</main>
+
+<%- include('./partials/footer.ejs' , { visible : true, customScripts : ["/scripts/users/user.js"]}) %>

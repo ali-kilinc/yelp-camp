@@ -1,0 +1,19 @@
+
+<form id="comment-form" action="/campgrounds/<%= campgroundId %>/review" method="POST">
+    <div>
+        <label>Rating : </label>
+        <i id="star-1" class="<%= (review && review.rating >= 1) ? "fas" : "far" %> fa-star green"></i>
+        <i id="star-2" class="<%= (review && review.rating >= 2) ? "fas" : "far" %> fa-star green"></i>
+        <i id="star-3" class="<%= (review && review.rating >= 3) ? "fas" : "far" %> fa-star green"></i>
+        <i id="star-4" class="<%= (review && review.rating >= 4) ? "fas" : "far" %> fa-star green"></i>
+        <i id="star-5" class="<%= (review && review.rating == 5) ? "fas" : "far" %> fa-star green"></i>
+        <input id="rating-input" type="hidden" name="review[rating]" value="<%= (review) ? review.rating : 0 %>">
+    </div>
+    <textarea class="d-block w-100 mb-1" type="text" name="review[comment]" placeholder="write your thoughts about this campground here" required><%= (review) ? review.comment : "" %></textarea>
+    <button class="btn btn-success btn-sm float-right ml-1" id="save-comment">Save</button>
+</form>
+<% if(review) { %>
+    <form class="d-inline float-right" action="/campgrounds/<%= campground._id %>/review/<%= review._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger btn-sm float-right" id="delete-comment">Delete</button>
+    </form>
+<% } %>

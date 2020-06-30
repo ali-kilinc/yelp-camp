@@ -1,0 +1,138 @@
+<%- include('../partials/header.ejs', {pageTitle : campground.name, container : true, customStylesheets : ["https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css",
+                                                                                          "/stylesheets/common.css",
+                                                                                          "/stylesheets/campgrounds/map.min.css"]}) %>
+
+<%
+let total = 0, rating = 0;
+if(campground.reviews && campground.reviews.length > 0)
+{
+    campground.reviews.forEach(r => {
+    total += r.rating;
+    });
+    rating = total / campground.reviews.length;
+}
+%>
+
+<main class="container shadow  bg-white p-5 mt-5">
+
+    <% if(successMessage && successMessage.length > 0) { %>
+        <div class="alert alert-success" role="alert"><%- successMessage %></div>
+    <% } %>
+    
+    <% if(errorMessage && errorMessage.length > 0) { %>
+        <div class="alert alert-danger" role="alert"><%- errorMessage %></div>
+    <% } %>
+
+    <h2><%= campground.name %></h2>
+    <hr>
+    <div class="row">
+        <section id="sideinfo-sec" class="order-1 order-lg-0 col-lg-3">
+            <label class="d-block green"><i class="fas fa-map-marker-alt"></i> Location</label>
+            <div id='map'>
+                <input id="campground-location" type="hidden" value="<%= JSON.stringify(campground.location) %>">
+            </div>
+            <label class="d-block green"><i class="fas fa-campground"></i> Amenities</label>
+            <% if(campground.amenities.length == 0) { %>
+                <p>Seems like this place is wild...</p>
+            <% } else { 
+                    amenities.forEach(a => { 
+                        if(campground.amenities.indexOf(a.amenity) >= 0) { %>
+                            <span class="badge badge-pill amenity-span active"><%- a.icon + " " + a.amenity %></span>
+                        <% }
+                    });
+                } %> 
+        </section>
+
+        <section id="campground-details-sec" class="order-0 order-lg-1 col-lg-9">
+            <div class="card">
+                <img class="card-img-top" src="<%= campground.imageUrl %>">
+                <div class="card-body">
+                    <h4 class="card-title float-right"><i class="fas fa-dollar-sign green"></i><%= campground.price %>/night</h4>
+                    <h4 class="card-title"><%= campground.name %>
+                        <div>
+                        <% for(var i=0; i<5; i++) {  
+                            if(rating >= 1) { %>
+                                <i class="fas fa-star green"></i>
+                            <% } else if(rating > 0 && rating < 1) { %>
+                                <i class="fas fa-star-half-alt green"></i>
+                            <% } else { %>
+                                <i class="far fa-star green"></i>
+                            <% }
+                                rating -= 1;
+                        } %> <small class="text-muted"> <%= campground.reviews.length %> Reviews</small>
+                        </div>
+                    </h4>
+                    <p class="card-text"><%= campground.description %></p>
+                    <hr>
+                    <span class="text-muted font-italic">Submitted by <%= campground.author.username %></span>
+                    <% if(currentUser && currentUser._id.equals(campground.author._id)){ %>
+                        <a class="btn btn-success btn-sm float-right ml-1" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                        <form class="d-inline float-right" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
+                            <button id="delete-btn" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews-sec" class="col-12 order-2 mt-1">
+            <label class="d-block green"><i class="fas fa-comment"></i> Reviews</label>
+            <ul class="list-group">
+                
+                <li class="list-group-item">
+                    <% if(currentUser){ 
+                        var currentUserReview = campground.reviews.find(r => r.postedBy._id.equals(currentUser._id)); 
+                        if(currentUserReview) { %>
+                            <button id="edit-review-btn" class="btn btn-success btn-sm">Edit your review</button>
+                            <div id="comment-form-container">
+                                <%- include('../partials/commentForm.ejs' , { campgroundId : campground._id, review : currentUserReview }) %>
+                            </div>
+                        <% } else { %>
+                            <button id="add-review-btn" class="btn btn-success btn-sm">Leave a review</button>
+                            <div id="comment-form-container">
+                                <%- include('../partials/commentForm.ejs' , { campgroundId : campground._id, review : null }) %>
+                            </div>
+                            <% }
+                    } else { %>
+                            <span><a href="#" id="login-anchor">Login</a> to add a review</span>
+                    <% } %>
+                </li>
+
+                <% if(campground.reviews) { 
+                    campground.reviews.forEach((r, i) => { %>
+                
+                    <li class="list-group-item <% if(i % 2 ==0 ) { %> list-group-item-secondary <% } %>">
+                        <p>
+                          <i class="fas fa-user green"></i> <%= r.postedBy.username %>
+                            <span class="float-right">
+                                <%
+                                rating = r.rating;
+                                for(var i=0; i<5; i++) {
+                                    if(rating >= 1) { %>
+                                        <i class="fas fa-star green"></i>
+                                    <% } else if(rating > 0 && rating < 1) { %>
+                                        <i class="fas fa-star-half-alt green"></i>
+                                    <% } else { %>
+                                        <i class="far fa-star green"></i>
+                                    <% }
+                                    rating -= 1;
+                                } %>
+                            </span>
+                        </p>
+                        <span class="text-muted"><%= (r.comment) ? r.comment : "" %></span>
+                      </li>
+
+                      <% });
+                    } else { %>
+                        <span class="text-muted">No reviews for this campground yet.</span>
+                    <% }%>
+            </ul>
+        <section>
+    </div>
+</main>
+
+<script>
+        ScrollReveal().reveal('.list-group-item', { interval: 150, mobile: true, viewFactor: 0.3});
+    </script>
+
+<%- include('../partials/footer.ejs' , { visible : true, customScripts : ["https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js", "/scripts/campgrounds/show.js", "/scripts/users/user.js"]}) %>

@@ -1,0 +1,22 @@
+<%- include('./partials/header.ejs', {pageTitle : "Yelp Camp", container : false, customStylesheets : ["/stylesheets/common.min.css", "/stylesheets/landing.min.css"]}) %>
+
+<header>
+    <div class="overlay"></div>
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+      <source src="/videos/landing.mp4" type="video/mp4">
+    </video>
+    <div class="container h-100">
+      <div class="d-flex h-100 text-center align-items-center">
+        <div class="w-100 text-light">
+          <h1>Welcome to YelpCamp</h1>
+          <p class="lead">Explore the most beatiful campgrounds all over the world.</p>
+          <a class="btn btn-success btn-sm" href="/campgrounds">View All Campgrounds</a>
+        </div>
+      </div>
+    </div>
+</header>
+
+<script>
+  document.getElementsByTagName("body")[0].style.paddingTop = 0;
+</script>
+<%- include('./partials/footer.ejs' , { visible : false, customScripts : ["/scripts/users/user.js"]}) %>

@@ -1,0 +1,27 @@
+#map{
+    width: 100%;
+    height: 300px;
+    border : 1px solid black;
+    margin-bottom: 0.5rem;
+}
+
+#missing-location-warning
+{
+    display: none;
+}
+
+#location-search-results
+{
+    position: absolute;
+    display: none;
+    font-size: 1rem;
+    padding-left: 1rem;
+    z-index: 144;
+}
+
+#ok-span
+{
+    float: right;
+    font-size: 1rem;
+    padding: 0.5rem 2rem;
+}
