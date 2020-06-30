@@ -292,7 +292,14 @@ router.delete("/:id/review/:review_id", function(req, res)
 router.get("/:id", function(req, res){
     let getCamp = Campground.findById(req.params.id).populate("author").populate("reviews.postedBy").exec();
     getCamp.then(campground => {
-        res.render("campgrounds/show", {amenities : amenities, campground:campground});
+        if(!campground)
+        {
+            res.render("notfound");
+        }
+        else
+        {
+            res.render("campgrounds/show", {amenities : amenities, campground:campground});
+        }
     }).catch(err => {
         console.log(err);
         req.flash("errorMessage", `An error occured during the process. We're working on it. Please try again later`);
