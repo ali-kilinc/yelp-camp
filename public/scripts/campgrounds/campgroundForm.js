@@ -52,7 +52,7 @@ $(document).ready(function () {
                 cache: false
             };
 
-            $.ajax(options).then(res => {
+            $.ajax(options).then(function(res) {
 
                 if ($("#location-search-results").is(":visible")) {
                     $("#location-search-results").slideUp(function () {
@@ -88,7 +88,7 @@ $(document).ready(function () {
                 $("#location-search-text").text("");
             });
 
-            res.features.forEach((place, index) => {
+            res.features.forEach(function(place, index) {
 
                 var $button = $("<button>");
                 $button.attr("type", "button");
