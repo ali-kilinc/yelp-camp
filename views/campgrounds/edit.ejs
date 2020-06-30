@@ -17,7 +17,7 @@
     <div id="missing-location-warning" class="alert alert-danger" role="alert">Pick a Location For The Campground</div>
 
     <div class="row">
-        <form class="col-12 col-lg-6 p-3" id="edit-form" action="/campgrounds/<%= campground._id%>?_method=PUT" method="POST">
+        <form class="col-12 col-lg-6 p-3" id="campground-form" action="/campgrounds/<%= campground._id%>?_method=PUT" method="POST">
             <label for="campground[name]">Campground Name</label>
             <input class="w-100 d-block mb-2" type="text" name="campground[name]" placeholder="name" value="<%= campground.name %>" required>
             <label for="campground[description]">Description</label>
@@ -58,7 +58,7 @@
         </section>        
     </div>
     <hr>
-    <button type="submit" form="edit-form" class="btn btn-success float-right">Update The Campground</button>
+    <button id="btn-campground-form-submit" class="btn btn-success float-right">Update The Campground</button>
 </main>
 
 <%- include('../partials/footer.ejs', { visible : true, customScripts : ["https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js", "/scripts/campgrounds/campgroundForm.js", "/scripts/users/user.js"]}) %>

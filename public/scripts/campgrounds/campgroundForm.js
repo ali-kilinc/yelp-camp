@@ -139,11 +139,7 @@ $(document).ready(function () {
         $("#missing-location-warning").slideUp();
     }
 
-    $("#add-form").submit(function (e) {
-        campgroundFormSubmit(e);
-    });
-    
-    $("#edit-form").submit(function (e) {
+    $("#campground-form").submit(function (e) {
         campgroundFormSubmit(e);
     });
     
@@ -177,6 +173,10 @@ $(document).ready(function () {
             const index = amenities.indexOf(amenity);
             amenities.splice(index, 1);
         }
+    });
+
+    $("#btn-campground-form-submit").on("click", function(){
+        $("#campground-form").submit();
     });
 });
 
