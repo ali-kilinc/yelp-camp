@@ -68,7 +68,14 @@ function registerSubmit(event) {
             $('#error-message').slideDown();
         }
         else {
-            location.reload();
+            if(window.location.pathname === "/")
+            {
+                window.location.href = "/campgrounds";
+            }
+            else
+            {
+                location.reload();
+            }
         }
     }).catch(function(err) {
         $('#error-message').html("Something went wrong. Please try again later :(");
@@ -125,7 +132,14 @@ function loginSubmit(event) {
             $('#error-message').slideDown()
         }
         else {
-            location.reload();
+            if(window.location.pathname === "/")
+            {
+                window.location.href = "/campgrounds";
+            }
+            else
+            {
+                location.reload();
+            }
         }
 
     }).catch(function(res) {
