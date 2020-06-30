@@ -138,45 +138,46 @@ $(document).ready(function () {
         $("#location-input").val(JSON.stringify(lngLat));
         $("#missing-location-warning").slideUp();
     }
+
+    $("#add-form").submit(function (e) {
+        campgroundFormSubmit(e);
+    });
+    
+    $("#edit-form").submit(function (e) {
+        campgroundFormSubmit(e);
+    });
+    
+    function campgroundFormSubmit(e) {
+        if (!$("#location-input").val()) {
+            e.preventDefault();
+            $("#missing-location-warning").slideDown();
+        }
+        else {
+            $("#amenities-input").val(JSON.stringify(amenities));
+        }
+    }
+    
+    $(document).on("click", function (event) {
+    
+        if (!$(event.target).closest('#location-search-results').length) {
+            $("#location-search-results").slideUp();
+            $("#location-search-text").text("");
+        }
+    });
+    
+    $("#amenities-sec").on("click", ".amenity-span", function () {
+        $(this).toggleClass("active");
+    
+        var amenity = $.trim($(this).text());
+    
+        if ($(this).hasClass("active")) {
+            amenities.push(amenity);
+        }
+        else {
+            const index = amenities.indexOf(amenity);
+            amenities.splice(index, 1);
+        }
+    });
 });
 
 
-$("#add-form").submit(function (e) {
-    campgroundFormSubmit(e);
-});
-
-$("#edit-form").submit(function (e) {
-    campgroundFormSubmit(e);
-});
-
-function campgroundFormSubmit(e) {
-    if (!$("#location-input").val()) {
-        e.preventDefault();
-        $("#missing-location-warning").slideDown();
-    }
-    else {
-        $("#amenities-input").val(JSON.stringify(amenities));
-    }
-}
-
-$(document).on("click", function (event) {
-
-    if (!$(event.target).closest('#location-search-results').length) {
-        $("#location-search-results").slideUp();
-        $("#location-search-text").text("");
-    }
-});
-
-$("#amenities-sec").on("click", ".amenity-span", function () {
-    $(this).toggleClass("active");
-
-    var amenity = $.trim($(this).text());
-
-    if ($(this).hasClass("active")) {
-        amenities.push(amenity);
-    }
-    else {
-        const index = amenities.indexOf(amenity);
-        amenities.splice(index, 1);
-    }
-});
