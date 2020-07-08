@@ -35,7 +35,7 @@
 
             <div class="col-12 col-sm-6 col-lg-4 p-4">
                 <div class="shadow card">
-                    <img src="<%= camp.imageUrl %>" onclick="window.location.href = '/campgrounds/<%= camp._id %>';" onerror="if (this.src != '/images/nopiccamp.png') this.src = '/images/nopiccamp.png';" class="card-img-top link" alt="<%= camp.name %>>">
+                    <img src="<%= camp.imageUrl %>" onclick="window.location.href = '/campgrounds/<%= camp._id %>';" onerror="if (this.src != '/images/nopiccamp.jpg') this.src = '/images/nopiccamp.jpg';" class="card-img-top link" alt="<%= camp.name %>>">
                     <div class="card-body">
                         <span class="card-title"><%- '<a href="/campgrounds/' + camp._id + '">' + camp.name + '</a>' %>
                             <div>
