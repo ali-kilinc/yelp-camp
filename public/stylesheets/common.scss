@@ -6,8 +6,14 @@ body
 {
   padding-top: 50px;
   font-family: 'Gentium Basic', serif;
-  font-size : 1.2rem;
+  font-size : 1rem;
   background-color: $color-background;
+}
+
+@media (min-width: 576px) {
+  body{
+    font-size: 1.2rem;
+  }
 }
 
 header {
